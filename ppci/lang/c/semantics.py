@@ -530,8 +530,8 @@ class CSemantics:
 
     def check_condition(self, condition):
         condition = self.pointer(condition)
-        if not condition.typ.is_integer:
-            condition = self.coerce(condition, self.get_type(["int"]))
+        if not (condition.typ.is_scalar or condition.typ.is_pointer):
+            self.error("Expected scalar or pointer", condition.location)
         return condition
 
     def on_if(self, condition, then_statement, no, location):
